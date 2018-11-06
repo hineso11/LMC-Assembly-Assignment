@@ -1,2 +1,2 @@
 Test#,File,Comment,Input_1,Input_2,Input_3,Expected_output_1,Max_cycles,Mailboxes_used,Cycles_used,Halted(1)_or_Terminated(0),Outputs
-0,BaseConverter.txt, COMPILE FAILED
+1,BaseConverter.txt,Into base 10,123, 4, 5,102,1000,81 ,397,1,3, 4, 15, 40, 15

@@ -28,7 +28,9 @@ init	LDA	010
 
 # MOD/QUOT OPERATION
 # Initialise both local variables as 0
-loop	LDA	000
+loop	LDA	010
+	STO	mCount
+	LDA	000
 	STO	quot
 	STO	rem
 # Main loop subtracts op2 from op1
@@ -39,6 +41,7 @@ modL	LDA	quot
 	STO	quot
 	LDA	n
 	STO	rem
+	STO	op2
 	SUB	div
 	STO	n
 # Check if finished
@@ -93,6 +96,8 @@ end	LDA	mRes
 	STO	count
 	IN
 	STO	div
+	LDA	total
+	STO	n
 	BR	loop
 	
 
@@ -118,3 +123,8 @@ op2	DAT
 010	DAT	010
 count	DAT	010
 mCount	DAT	010
+
+
+
+
+
