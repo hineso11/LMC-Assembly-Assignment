@@ -1,0 +1,74 @@
+# Enter assembler code here
+#
+# To add comments begin lines with #
+# Code lines have 3 entries separated by tabs
+# > First an optional label,
+# > second an instruction mnemonic, and 
+# > third an address label if required.
+#
+# Valid mnemonics are:
+# HLT, ADD, SUB, STO, LDA,
+# BR, BRZ, BRP, IN, OUT, DAT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# MOD/QUOT OPERATION
+# Initialise both local variables as 0
+modS	LDA	000
+	STO	quot
+	STO	rem
+# Main loop subtracts op2 from op1
+# keeping track of number of loops
+# and final remainder
+modL	LDA	quot
+	ADD	001
+	STO	quot
+	LDA	op1
+	STO	rem
+	SUB	div
+	STO	op1
+# Check if finished
+	BRP	modL
+# If so output quot and rem
+	LDA	quot
+	SUB	001
+	STO	n
+	BR	digRet
+
+# END MOD/QUOT OPERATION
+
+# MULTIPLY OPERATION
+# Initialise result of multiplication as 0
+multiS	LDA	000
+	STO	mRes
+# Check if second operand is 0
+# If it is then finish
+multiL	LDA	op2
+	BRZ	control
+# Take 1 off of operand 2
+	SUB	001
+	STO	op2
+	LDA	mRes
+# Add operand 1 to the result
+# for the number of times specififed by
+# operand 2
+	ADD	op1
+	STO	mRes
+	LDA	op2
+# Loop around again
+	BR	multiL
+# END MULTIPLY OPERATION
