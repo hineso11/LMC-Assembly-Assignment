@@ -89,7 +89,11 @@ multiE	LDA	mCount
 # Store the result of the 2nd multiplication
 end	LDA	mRes
 	STO	m
-	LDA	count
+	LDA	n
+	BRZ	control
+	BR	loop
+
+control	LDA	count
 	BRZ	output
 	STO	m2
 	SUB	010
@@ -98,6 +102,10 @@ end	LDA	mRes
 	STO	div
 	LDA	total
 	STO	n
+	LDA	000
+	STO	total
+	LDA	001
+	STO	m
 	BR	loop
 	
 
@@ -123,6 +131,11 @@ op2	DAT
 010	DAT	010
 count	DAT	010
 mCount	DAT	010
+
+
+
+
+
 
 
 
