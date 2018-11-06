@@ -11,24 +11,18 @@
 # BR, BRZ, BRP, IN, OUT, DAT
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Variable initialisation and input
+init	LDA	010
+	STO	div
+	STO	mCount
+	STO	count
+	IN
+	STO	n
 
 
 # MOD/QUOT OPERATION
 # Initialise both local variables as 0
-modS	LDA	000
+loop	LDA	000
 	STO	quot
 	STO	rem
 # Main loop subtracts op2 from op1
@@ -37,18 +31,16 @@ modS	LDA	000
 modL	LDA	quot
 	ADD	001
 	STO	quot
-	LDA	op1
+	LDA	n
 	STO	rem
 	SUB	div
-	STO	op1
+	STO	n
 # Check if finished
 	BRP	modL
 # If so output quot and rem
 	LDA	quot
 	SUB	001
 	STO	n
-	BR	digRet
-
 # END MOD/QUOT OPERATION
 
 # MULTIPLY OPERATION
@@ -58,7 +50,7 @@ multiS	LDA	000
 # Check if second operand is 0
 # If it is then finish
 multiL	LDA	op2
-	BRZ	control
+	BRZ	multiE
 # Take 1 off of operand 2
 	SUB	001
 	STO	op2
@@ -66,17 +58,46 @@ multiL	LDA	op2
 # Add operand 1 to the result
 # for the number of times specififed by
 # operand 2
-	ADD	op1
+	ADD	m
 	STO	mRes
 	LDA	op2
 # Loop around again
 	BR	multiL
 # END MULTIPLY OPERATION
 
+# Check if this is 1st multiplication or 2nd
+multiE	LDA	mCount
+	BRZ	end
+	SUB	010
+	STO	mCount
+	LDA	total
+	ADD	mRes
+	STO	total
+	LDA	m2
+	STO	op2
+	BR	multiS
+
+# Store the result of the 2nd multiplication
+end	LDA	mRes
+	STO	m
+	LDA	count
+	BRZ	output
+	SUB	010
+	STO	count
+
+
+output	LDA	total
+	OUT
+	HLT
+
+	
+
 # Data declarations
 quot	DAT	000
 rem	DAT	000
 mRes	DAT	000
-op1	DAT	
 op2	DAT
 001	DAT	001
+010	DAT	010
+count	DAT	010
+mCount	DAT	010
