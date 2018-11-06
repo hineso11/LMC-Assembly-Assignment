@@ -16,8 +16,14 @@ init	LDA	010
 	STO	div
 	STO	mCount
 	STO	count
+	LDA	001
+	STO	m
+	LDA	000
+	STO	total
 	IN
 	STO	n
+	IN
+	STO	m2
 
 
 # MOD/QUOT OPERATION
@@ -82,8 +88,13 @@ end	LDA	mRes
 	STO	m
 	LDA	count
 	BRZ	output
+	STO	m2
 	SUB	010
 	STO	count
+	IN
+	STO	div
+	BR	loop
+	
 
 
 output	LDA	total
@@ -93,10 +104,16 @@ output	LDA	total
 	
 
 # Data declarations
+n	DAT
 quot	DAT	000
 rem	DAT	000
+div	DAT	010
+m	DAT	001 
+total	DAT	000
 mRes	DAT	000
+m2	DAT	
 op2	DAT
+000	DAT	000
 001	DAT	001
 010	DAT	010
 count	DAT	010

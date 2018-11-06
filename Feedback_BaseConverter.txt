@@ -1,0 +1,24 @@
+Feedback for LMC file: BaseConverter.txt
+
+
+Attempting to compile: Compile failed
+
+Errors:
+Line 92: No instruction: '_92 	 -'
+Line 15: Error - label 'div' not found
+Line 19: Error - label 'n' not found
+Line 24: Error - label '000' not found
+Line 33: Error - label 'n' not found
+Line 35: Error - label 'div' not found
+Line 36: Error - label 'n' not found
+Line 42: Error - label 'n' not found
+Line 47: Error - label '000' not found
+Line 60: Error - label 'm' not found
+Line 72: Error - label 'total' not found
+Line 74: Error - label 'total' not found
+Line 75: Error - label 'm2' not found
+Line 81: Error - label 'm' not found
+Line 88: Error - label 'total' not found
+
+
+
