@@ -132,10 +132,14 @@ control	LDA	count
 
 # MARK: Output function
 output	LDA	total
-	OUT
+out	OUT
 	HLT
 
-
+# MARK: Error function
+# Load in error code and branch to out 
+# This saves a mailbox by reusing HLT command
+error	LDA	999
+	BR	out
 
 # MARK: Data declarations
 # n: stores the original number given by the user
@@ -172,5 +176,8 @@ mCount	DAT	010
 000	DAT	000
 001	DAT	001
 010	DAT	010
+999	DAT	999
+
+
 
 

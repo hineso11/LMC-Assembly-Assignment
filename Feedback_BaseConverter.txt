@@ -1,12 +1,12 @@
 Feedback for LMC file: BaseConverter.txt
 
 
-Attempting to compile: Compile successful. 84 mailboxes used.
+Attempting to compile: Compile successful. 87 mailboxes used.
 
 
 Attempting to run test 1: Test2
-    Inputs:  351, 6, 9
-  Expected: 164
-    Output: 164
-  Halted after 1310 Fetch/execute cycles.
+    Inputs:  123, 6, 8
+  Expected: 063
+    Output: 63
+  Halted after 833 Fetch/execute cycles.
 
