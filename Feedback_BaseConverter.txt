@@ -6,7 +6,7 @@ Attempting to compile: Compile successful. 87 mailboxes used.
 
 Attempting to run test 1: Test2
     Inputs:  123, 6, 8
-  Expected: 063
+  Expected: 63
     Output: 63
   Halted after 833 Fetch/execute cycles.
 
