@@ -1,2 +1,2 @@
 Test#,File,Comment,Input_1,Input_2,Input_3,Expected_output_1,Max_cycles,Mailboxes_used,Cycles_used,Halted(1)_or_Terminated(0),Outputs
-1,BaseConverter.txt,Into base 10,123, 4, 5,102,1000,88 ,923,1,12, 12, 1, 1, 0, 0, 5, 5, 1, 1, 0, 0, 102
+1,BaseConverter.txt,Test2, 351, 6, 9,164,5000,84 ,1310,1,164

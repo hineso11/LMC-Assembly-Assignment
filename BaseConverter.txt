@@ -1,39 +1,41 @@
-# Enter assembler code here
-#
-# To add comments begin lines with #
-# Code lines have 3 entries separated by tabs
-# > First an optional label,
-# > second an instruction mnemonic, and 
-# > third an address label if required.
-#
-# Valid mnemonics are:
-# HLT, ADD, SUB, STO, LDA,
-# BR, BRZ, BRP, IN, OUT, DAT
+# Throughout the program a "base algorithm will be referred
+# to, this is outlined below:
+# digit = n mod div
+# n = n // div
+# toAdd = digit * m
+# total += toAdd
+# m = m2 * m
 
 
 # Variable initialisation and input
+# First run through of algorithm requires
+# 10 as divisor and base algorithm
+# count
 init	LDA	010
 	STO	div
-	STO	mCount
 	STO	count
+# Initial value of multiplier is 1 since this is used when
+# calculating first digit
 	LDA	001
 	STO	m
+# Total starts at 0
 	LDA	000
 	STO	total
+# Read in the first number which is n
 	IN
 	STO	n
+# Read in a (first base) which is used as first value of m2
 	IN
 	STO	m2
-
-
-# MOD/QUOT OPERATION
-# Initialise both local variables as 0
+# Initialise multiplication count with start value of 10
 loop	LDA	010
 	STO	mCount
+# MARK: MOD/QUOT Operation
+# Initialise variables for mod/quot operation
 	LDA	000
 	STO	quot
 	STO	rem
-# Main loop subtracts op2 from op1
+# Main loop subtracts div from op1
 # keeping track of number of loops
 # and final remainder
 modL	LDA	quot
@@ -41,7 +43,7 @@ modL	LDA	quot
 	STO	quot
 	LDA	n
 	STO	rem
-	STO	op2
+	STO	op1
 	SUB	div
 	STO	n
 # Check if finished
@@ -51,93 +53,124 @@ modL	LDA	quot
 	SUB	001
 	STO	n
 # END MOD/QUOT OPERATION
-
 # MULTIPLY OPERATION
 # Initialise result of multiplication as 0
 multiS	LDA	000
 	STO	mRes
-# Check if second operand is 0
+# Check if first operand is 0
 # If it is then finish
-multiL	LDA	op2
+multiL	LDA	op1
 	BRZ	multiE
-# Take 1 off of operand 2
+# Take 1 off of operand 1
 	SUB	001
-	STO	op2
+	STO	op1
 	LDA	mRes
-# Add operand 1 to the result
-# for the number of times specififed by
-# operand 2
+# Add m (2nd operand) to the result
 	ADD	m
 	STO	mRes
-	LDA	op2
 # Loop around again
 	BR	multiL
 # END MULTIPLY OPERATION
-
+# multiE: where the program returns to after finishing a
+# multiplication
 # Check if this is 1st multiplication or 2nd
 multiE	LDA	mCount
-	BRZ	end
+	BRZ	2nd
+# Decrement counter if first multiplication
 	SUB	010
 	STO	mCount
+# Add the result of the 1st multiplication to total
 	LDA	total
 	ADD	mRes
 	STO	total
+# Load m2 as 1st operand for 2nd multiplication
 	LDA	m2
-	STO	op2
+	STO	op1
+# Branch to 2nd multiplication start
 	BR	multiS
 
-# Store the result of the 2nd multiplication
-end	LDA	mRes
+# 2nd: where the program branches if 2nd multiplication is 
+# complete
+# Store the result of the 2nd multiplication as new m
+2nd	LDA	mRes
 	STO	m
+# This is the end of the base algorithm
+# So branch to control function if n == 0, else another 
+# loop of the base algorithm is required
 	LDA	n
 	BRZ	control
 	BR	loop
 
+# control: function determines whether base algorithm needs
+# to be run again with different inputs or whether the program
+# is complete
+# If count == 0 then program should output result
 control	LDA	count
 	BRZ	output
+# Else, the program should load the 2nd set of inputs for 
+# base algorithm
+# 10 will be stored in m2 since it must be in count if 
+# count != 0
 	STO	m2
 	SUB	010
+# Store 0 in count
 	STO	count
+# Get b (the 2nd base) in and store it as the divisor 
 	IN
 	STO	div
+# Move the total to be the new value of n
 	LDA	total
 	STO	n
+# Reset total to 0
 	LDA	000
 	STO	total
+# Reset m to 1
 	LDA	001
 	STO	m
+# Branch to start of base algorithm
 	BR	loop
-	
 
-
+# MARK: Output function
 output	LDA	total
 	OUT
 	HLT
 
-	
 
-# Data declarations
+
+# MARK: Data declarations
+# n: stores the original number given by the user
+# then subsequently the number in base 10 on 2nd run
 n	DAT
+# quot and rem: are variables used locally in the
+# mod operation
 quot	DAT	000
 rem	DAT	000
+# div: used in main algorithm as divisor for
+# mod/quot operation
 div	DAT	010
-m	DAT	001 
+# m: the multiplier used to determine what to
+# add to the running total of new number
+m	DAT	001
+# total: running total for the new number
+# also used to initialise new n
 total	DAT	000
+# mRes: used locally in the multiply operation
+# to hold the result of the computation
 mRes	DAT	000
-m2	DAT	
-op2	DAT
+# m2: the second operand in multiplier function
+# to determine new m at end of main algorithm
+m2	DAT
+# op1: first operand used in the multiply operation
+op1	DAT
+# count: counter used to track number of runs of base 
+# algorithm
+count	DAT	010
+# mCount: counter used to track whether 1st or 2nd 
+# multiplication of base algorithm should be computed
+mCount	DAT	010
+# Various constant data values
 000	DAT	000
 001	DAT	001
 010	DAT	010
-count	DAT	010
-mCount	DAT	010
-
-
-
-
-
-
-
-
 
 
