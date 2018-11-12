@@ -9,18 +9,15 @@
 
 # Variable initialisation and input
 # First run through of algorithm requires
-# 10 as divisor and base algorithm
-# count
+# 10 as divisor, base algorithm count and overflow monitor
 init	LDA	010
 	STO	div
 	STO	count
+	STO	oflow
 # Initial value of multiplier is 1 since this is used when
 # calculating first digit
 	LDA	001
 	STO	m
-# Overflow counter starts at 3
-	LDA	003
-	STO	oflow
 # Total starts at 0
 	LDA	000
 	STO	total
@@ -32,9 +29,10 @@ init	LDA	010
 	STO	m2
 # Subtract 1 from overflow counter, check if should continue
 loop	LDA	oflow
-	BRZ	error
-	SUB	001
-	STO	oflow
+	SUB	003
+	BRP	cont
+	BR	error
+cont	STO	oflow
 # Initialise multiplication count with start value of 10	
 	LDA	010
 	STO	mCount
@@ -117,9 +115,10 @@ control	LDA	count
 	BRZ	output
 # Else, the program should load the 2nd set of inputs for 
 # base algorithm
-# 10 will be stored in m2 since it must be in count if 
+# 10 will be stored in m2 and overflow monitor since it must be in count if 
 # count != 0
 	STO	m2
+	STO	oflow
 	SUB	010
 # Store 0 in count
 	STO	count
@@ -135,9 +134,6 @@ control	LDA	count
 # Reset m to 1
 	LDA	001
 	STO	m
-# Reset overflow counter to 3
-	LDA	003
-	STO	oflow
 # Branch to start of base algorithm
 	BR	loop
 
@@ -184,13 +180,16 @@ count	DAT	010
 # multiplication of base algorithm should be computed
 mCount	DAT	010
 # oflow: Counter used to monitor whether an overflow has occured
-oflow	DAT	003
+oflow	DAT	010
 # Various constant data values
 000	DAT	000
 001	DAT	001
 003	DAT	003
 010	DAT	010
 999	DAT	999
+
+
+
 
 
 
