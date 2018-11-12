@@ -18,6 +18,9 @@ init	LDA	010
 # calculating first digit
 	LDA	001
 	STO	m
+# Overflow counter starts at 3
+	LDA	003
+	STO	oflow
 # Total starts at 0
 	LDA	000
 	STO	total
@@ -27,8 +30,13 @@ init	LDA	010
 # Read in a (first base) which is used as first value of m2
 	IN
 	STO	m2
-# Initialise multiplication count with start value of 10
-loop	LDA	010
+# Subtract 1 from overflow counter, check if should continue
+loop	LDA	oflow
+	BRZ	error
+	SUB	001
+	STO	oflow
+# Initialise multiplication count with start value of 10	
+	LDA	010
 	STO	mCount
 # MARK: MOD/QUOT Operation
 # Initialise variables for mod/quot operation
@@ -127,6 +135,9 @@ control	LDA	count
 # Reset m to 1
 	LDA	001
 	STO	m
+# Reset overflow counter to 3
+	LDA	003
+	STO	oflow
 # Branch to start of base algorithm
 	BR	loop
 
@@ -172,8 +183,14 @@ count	DAT	010
 # mCount: counter used to track whether 1st or 2nd 
 # multiplication of base algorithm should be computed
 mCount	DAT	010
+# oflow: Counter used to monitor whether an overflow has occured
+oflow	DAT	003
 # Various constant data values
 000	DAT	000
 001	DAT	001
+003	DAT	003
 010	DAT	010
 999	DAT	999
+
+
+
