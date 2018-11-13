@@ -2,9 +2,9 @@
 ### Each line should contain a test run in the format: 
 ### Comment;Inputs;Expected_outputs;Max_cycles
 ### where Inputs and outputs are comma separated lists
-Test2; 888,9,7;999;5000
-Test1; 351,6,9;164;5000
+###Test2; 888,9,7;999;5000
+###Test1; 351,6,9;164;5000
+Test6; 535,0,4;999;5000
 ###Test4; 456,10,5;999;5000
 ###Test3; 500,8,9;385;5000
 ###Test5; 532,6,8;310;5000
-###Test6; 537,6,8;999;5000

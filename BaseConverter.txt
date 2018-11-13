@@ -1,11 +1,11 @@
-# Throughout the program a "base algorithm will be referred
+# Throughout the program a "base algorithm" will be referred
 # to, this is outlined below:
 # digit = n mod div
 # n = n // div
 # toAdd = digit * m
 # total += toAdd
 # m = m2 * m
-
+# LOOP
 
 # Variable initialisation and input
 # First run through of algorithm requires
@@ -27,13 +27,18 @@ init	LDA	010
 # Read in a (first base) which is used as first value of m2
 	IN
 	STO	m2
+# Check the base is not 0 or 1
+	SUB	001
+	SUB	001
+	BRP	loop
+	BR	error
 # Subtract 1 from overflow counter, check if should continue
 loop	LDA	oflow
 	SUB	003
 	BRP	cont
 	BR	error
 cont	STO	oflow
-# Initialise multiplication count with start value of 10	
+# Initialise multiplication count with start value of 10
 	LDA	010
 	STO	mCount
 # MARK: MOD/QUOT Operation
@@ -95,13 +100,13 @@ multiE	LDA	mCount
 # Branch to 2nd multiplication start
 	BR	multiS
 
-# 2nd: where the program branches if 2nd multiplication is 
+# 2nd: where the program branches if 2nd multiplication is
 # complete
 # Store the result of the 2nd multiplication as new m
 2nd	LDA	mRes
 	STO	m
 # This is the end of the base algorithm
-# So branch to control function if n == 0, else another 
+# So branch to control function if n == 0, else another
 # loop of the base algorithm is required
 	LDA	n
 	BRZ	control
@@ -113,16 +118,16 @@ multiE	LDA	mCount
 # If count == 0 then program should output result
 control	LDA	count
 	BRZ	output
-# Else, the program should load the 2nd set of inputs for 
+# Else, the program should load the 2nd set of inputs for
 # base algorithm
-# 10 will be stored in m2 and overflow monitor since it must be in count if 
+# 10 will be stored in m2 and overflow monitor since it must be in count if
 # count != 0
 	STO	m2
 	STO	oflow
 	SUB	010
 # Store 0 in count
 	STO	count
-# Get b (the 2nd base) in and store it as the divisor 
+# Get b (the 2nd base) in and store it as the divisor
 	IN
 	STO	div
 # Move the total to be the new value of n
@@ -143,7 +148,7 @@ out	OUT
 	HLT
 
 # MARK: Error function
-# Load in error code and branch to out 
+# Load in error code and branch to out
 # This saves a mailbox by reusing HLT command
 error	LDA	999
 	BR	out
@@ -173,13 +178,13 @@ mRes	DAT	000
 m2	DAT
 # op1: first operand used in the multiply operation
 op1	DAT
-# count: counter used to track number of runs of base 
+# count: counter used to track number of runs of base
 # algorithm
 count	DAT	010
-# mCount: counter used to track whether 1st or 2nd 
+# mCount: counter used to track whether 1st or 2nd
 # multiplication of base algorithm should be computed
 mCount	DAT	010
-# oflow: Counter used to monitor whether an overflow has occured
+# oflow: Counter used to monitor whether an overflow has occurred
 oflow	DAT	010
 # Various constant data values
 000	DAT	000
@@ -187,9 +192,5 @@ oflow	DAT	010
 003	DAT	003
 010	DAT	010
 999	DAT	999
-
-
-
-
 
 
